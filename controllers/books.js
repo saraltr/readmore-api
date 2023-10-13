@@ -2,7 +2,7 @@ const mongodb = require("../library/connection");
 
 const getList = async(req, res) => {
     try {
-        const result = await mongodb.getDb().db().collection("books").find().toArray();
+        const result = await mongodb.getDb().db("bookstore").collection("books").find().toArray();
 
         // set the response content type to JSON and send the result
         res.setHeader("Content-Type", "application/json");
