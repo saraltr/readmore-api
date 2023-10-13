@@ -72,6 +72,7 @@ const addBook = async (req, res) => {
         author: req.body.author,
         genre: req.body.genre,
         nationality: req.body.nationality,
+        year_of_publication: req.body.year_of_publication
       };
   
       const result = await mongodb
@@ -93,19 +94,20 @@ const addBook = async (req, res) => {
 // update an existing book
 const updateBook = async (req, res) => {
     try {
-      const userId = new ObjectId(req.params.id);
+      const bookId = new ObjectId(req.params.id);
       const book = {
         title: req.body.title,
         author: req.body.author,
         genre: req.body.genre,
-        nationality: req.body.nationality
+        nationality: req.body.nationality,
+        year_of_publication: req.body.year_of_publication
       };
   
       const result = await mongodb
       .getDb()
       .db()
       .collection("books")
-      .replaceOne({ _id: userId }, book);
+      .replaceOne({ _id: bookId }, book);
   
       if (result.modifiedCount > 0) {
         res.status(204).send();
@@ -120,12 +122,12 @@ const updateBook = async (req, res) => {
 // remove book from the db
 const removeBook = async (req, res) => {
     try {
-      const userId = new ObjectId(req.params.id);
+      const bookId = new ObjectId(req.params.id);
       const result = await mongodb
       .getDb()
       .db()
       .collection("books")
-      .deleteOne({ _id: userId }, true);
+      .deleteOne({ _id: bookId }, true);
 
       if (result.acknowledged) {
         res.status(200).send();
