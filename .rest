@@ -1,2 +1,4 @@
 ###
 GET http://localhost:3000/books HTTP/1.1
+###
+GET http://localhost:3000/books/65296c08af2f980d3e4633d0 HTTP/1.1

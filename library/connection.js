@@ -28,7 +28,7 @@ async function initDb(callback) {
 
 // get the db connection
 function getDb() {
-  // Check if the db variable is not set 
+  // check if the db variable is not set 
   if (!db) {
     // error indicating that the database is not initialized
     throw new Error("Database not initialized");
