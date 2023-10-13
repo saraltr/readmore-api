@@ -18,6 +18,7 @@ const getList = async(req, res) => {
     }
 }
 
+// get a book by its id
 const getBook = async (req, res) => {
     const bookId = new ObjectId(req.params.id);
   
@@ -39,7 +40,108 @@ const getBook = async (req, res) => {
     }
 };
 
+// get a book by its title
+const getBookByTitle = async (req, res) => {
+    const bookTitle = req.params.title;
+  
+    try {
+      const result = await mongodb
+        .getDb()
+        .db()
+        .collection("books")
+        .findOne({ title: bookTitle });
+  
+      if (result) {
+        res.setHeader("Content-Type", "application/json");
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({ message: "Book not found" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+};
+
+// create a book entry  in the database
+const addBook = async (req, res) => {
+
+    try {
+      // extract book information from the request body
+      const book = {
+        title: req.body.title,
+        author: req.body.author,
+        genre: req.body.genre,
+        nationality: req.body.nationality,
+      };
+  
+      const result = await mongodb
+      .getDb()
+      .db()
+      .collection("books")
+      .insertOne(book);
+  
+      if (result.acknowledged) {
+        res.status(201).json({ message: "Book added successfully", result });
+      } else {
+        res.status(500).json({error: result.error});
+      }
+    } catch (error) {
+      res.status(500).json({message: error.message})
+    }
+};
+
+// update an existing book
+const updateBook = async (req, res) => {
+    try {
+      const userId = new ObjectId(req.params.id);
+      const book = {
+        title: req.body.title,
+        author: req.body.author,
+        genre: req.body.genre,
+        nationality: req.body.nationality
+      };
+  
+      const result = await mongodb
+      .getDb()
+      .db()
+      .collection("books")
+      .replaceOne({ _id: userId }, book);
+  
+      if (result.modifiedCount > 0) {
+        res.status(204).send();
+      } else {
+        res.status(404).json({ error: result.error });
+      }
+    } catch (error) {
+      res.status(500).json({message: error.message})
+    }
+};
+
+// remove book from the db
+const removeBook = async (req, res) => {
+    try {
+      const userId = new ObjectId(req.params.id);
+      const result = await mongodb
+      .getDb()
+      .db()
+      .collection("books")
+      .deleteOne({ _id: userId }, true);
+
+      if (result.acknowledged) {
+        res.status(200).send();
+      } else {
+        res.status(500).json({err: result.err});
+      }
+    } catch (err) {
+      res.status(500).json({message: err.message})
+    }
+};
+
 module.exports = {
     getList,
-    getBook
+    getBook,
+    getBookByTitle,
+    addBook,
+    updateBook,
+    removeBook
 };
