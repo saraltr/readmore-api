@@ -1,7 +1,11 @@
 ###
 GET http://localhost:3000/books HTTP/1.1
 ###
-GET http://localhost:3000/books/65296c08af2f980d3e4633d0 HTTP/1.1
+GET http://localhost:3000/read HTTP/1.1
+
+
+###
+GET http://localhost:3000/books/6529c1faaf2f980d3e46340d HTTP/1.1
 ###
 GET http://localhost:3000/books/title/Don%20Quixote HTTP/1.1
 
@@ -13,8 +17,12 @@ Content-Type: application/json
   "title": "Wuthering Heights",
   "author": "Emily Brontë",
   "genre": "Classic",
-  "nationality": "English"
+  "nationality": "English",
+  "year_of_publication": "1847"
 }
+
+###
+POST http://localhost:3000/read/add/6529c1faaf2f980d3e46340d HTTP/1.1
 
 ### update an existing book
 PUT http://localhost:3000/books/6529a165626c154fa01acb1e HTTP/1.1
@@ -24,7 +32,8 @@ Content-Type: application/json
   "title": "Wuthering Heights",
   "author": "Emily Brontë",
   "genre": "Classic, Romance",
-  "nationality": "English"
+  "nationality": "English",
+  "year_of_publication": "1847"
 }
 
 ###
