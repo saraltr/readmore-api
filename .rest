@@ -79,6 +79,7 @@ GET http://read-list-api.onrender.com/books/title/Don%20Quixote HTTP/1.1
 GET http://read-list-api.onrender.com/read/title/Jane%20Eyre HTTP/1.1
 
 # add a new book to the db
+###
 POST http://read-list-api.onrender.com/books HTTP/1.1
 Content-Type: application/json
 
@@ -92,9 +93,10 @@ Content-Type: application/json
 
 # add to the already read list
 ###
-POST http://read-list-api.onrender.com/read/add/ HTTP/1.1
+POST http://read-list-api.onrender.com/read/add/652a38345bd6b296735675c2 HTTP/1.1
 
 # update an existing book
+###
 PUT http://read-list-api.onrender.com/books/6529c1faaf2f980d3e46340d HTTP/1.1
 Content-Type: application/json
 
