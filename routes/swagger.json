@@ -309,6 +309,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "birthday": {
+                  "example": "any"
+                },
                 "username": {
                   "example": "any"
                 },
@@ -322,9 +325,6 @@
                   "example": "any"
                 },
                 "lastName": {
-                  "example": "any"
-                },
-                "birtday": {
                   "example": "any"
                 }
               }
@@ -339,14 +339,28 @@
             "description": "Internal Server Error"
           }
         }
+      },
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
-    "/users/{userId}": {
+    "/users/{id}": {
       "put": {
         "description": "",
         "parameters": [
           {
-            "name": "userId",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -357,6 +371,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "birthday": {
+                  "example": "any"
+                },
                 "username": {
                   "example": "any"
                 },
@@ -370,9 +387,6 @@
                   "example": "any"
                 },
                 "lastName": {
-                  "example": "any"
-                },
-                "birtday": {
                   "example": "any"
                 }
               }
@@ -390,11 +404,17 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/users/userId": {
+      },
       "delete": {
         "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

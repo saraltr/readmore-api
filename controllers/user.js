@@ -1,16 +1,22 @@
 const mongodb = require("../library/connection");
 const ObjectId = require("mongodb").ObjectId;
 
+
 // register a new user
 const registerUser = async (req, res) => {
     try {
+      // convert to ISO format
+      const originalDate = req.body.birthday; 
+      const parts = new Date(originalDate).toISOString().split("T");
+      const newDate = parts[0];
+
       const user = {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        birthday: req.body.birtday,
+        birthday: newDate,
       }
   
       const result = await mongodb
@@ -29,15 +35,37 @@ const registerUser = async (req, res) => {
     }
 };
 
+const getUsers = async (req, res) => {
+  try {
+    const result = await mongodb
+      .getDb()
+      .db()
+      .collection("users")
+      .find({}, { projection: { "password": 0 } }) // Exclude password if nested
+      .toArray();
+
+    // set the response content type to JSON and send the result
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 
 // login an existing user
 // const loginUser = async (req, res) => {
-//   // user authentication logic
+//   // user authentication 
 // };
 
 // update user profile
 const updateUser = async (req, res) => {
   try {
+
+    const originalDate = req.body.birthday; 
+    const parts = new Date(originalDate).toISOString().split("T");
+    const newDate = parts[0];
+    
     const userId = new ObjectId(req.params.id);
     const user = {
       username: req.body.username,
@@ -45,7 +73,7 @@ const updateUser = async (req, res) => {
       password: req.body.password,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      birthday: req.body.birtday,
+      birthday: newDate,
     }
 
     const result = await mongodb
@@ -86,7 +114,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   registerUser,
-  loginUser,
+  getUsers,
   updateUser,
   deleteUser,
 };

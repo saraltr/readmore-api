@@ -5,6 +5,8 @@
 GET http://localhost:3000/books HTTP/1.1
 ###
 GET http://localhost:3000/read HTTP/1.1
+###
+GET http://localhost:3000/users HTTP/1.1
 
 # Get by id
 ###
@@ -36,6 +38,19 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/read/add/652a300d73de62901f31d5e9 HTTP/1.1
 
+# add new user
+###
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "lara_croft",
+  "email": "laracroft@gmail.com",
+  "password": "adventurer123",
+  "firstName": "Lara",
+  "lastName": "Croft",
+  "birthday": "1968-02-14"
+}
 
 ### update an existing book
 PUT http://localhost:3000/books/652a300d73de62901f31d5e9 HTTP/1.1
@@ -49,6 +64,20 @@ Content-Type: application/json
   "year_of_publication": "1847"
 }
 
+# update user
+###
+PUT http://localhost:3000/users/6531a4469e7ca0367d9369a3 HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "lara_croft",
+  "email": "croftLara@gmail.com",
+  "password": "tombraider",
+  "firstName": "Lara",
+  "lastName": "Croft",
+  "birthday": "1968-02-14"
+}
+
 # remove book from the books collection
 ###
 DELETE  http://localhost:3000/books/ HTTP/1.1
@@ -56,6 +85,9 @@ DELETE  http://localhost:3000/books/ HTTP/1.1
 # remove book from the already read collection
 ###
 DELETE  http://localhost:3000/read/653191e91d072b6daa553cb2 HTTP/1.1
+
+###
+DELETE  http://localhost:3000/users/6531a33e9ebaf324eef83083 HTTP/1.1
 
 
 // PRODUCTION Deploy
