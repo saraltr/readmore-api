@@ -51,11 +51,11 @@ Content-Type: application/json
 
 # remove book from the books collection
 ###
-DELETE  http://localhost:3000/books/652a300d73de62901f31d5e9 HTTP/1.1
+DELETE  http://localhost:3000/books/ HTTP/1.1
 
 # remove book from the already read collection
 ###
-DELETE  http://localhost:3000/read/6529d47a3371bd44aedaf0b5 HTTP/1.1
+DELETE  http://localhost:3000/read/653191e91d072b6daa553cb2 HTTP/1.1
 
 
 // PRODUCTION Deploy
