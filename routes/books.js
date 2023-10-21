@@ -1,9 +1,9 @@
 const routes = require("express").Router();
 const booksController = require("../controllers/books");
 
-// validators
-const {addBookSchema} = require("../schema/booksSchema");
-const validate = require("../middlewares/validator");
+// validator
+const { addBookSchema } = require("../schema/booksSchema");
+const { validate } = require("../middlewares/validator");
 
 routes.get("/", booksController.getList);
 routes.get("/title/:title", booksController.getBookByTitle);

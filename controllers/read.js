@@ -20,7 +20,7 @@ const getList = async(req, res) => {
 
 // get a book by its id
 const getBook = async (req, res) => {
-    const bookId = new ObjectId(req.params.id);
+    const bookId = req.userId;
   
     try {
       const result = await mongodb
@@ -62,49 +62,50 @@ const getBookByTitle = async (req, res) => {
   }
 };
 
+// adds a book to the read list from the books (to read list) collection
 const addReadBook = async (req, res) => {
-    const bookId = new ObjectId(req.params.id);
-    try {
-      const bookDetails = await mongodb
-        .getDb()
-        .db()
-        .collection("books")
-        .findOne({ _id: bookId });
-  
-      if (!bookDetails) {
-        return res.status(404).json({ message: "Book not found" });
-      }
-  
-      // create an object with the desired book details
-      const bookToAdd = {
-        title: bookDetails.title,
-        author: bookDetails.author,
-        genre: bookDetails.genre,
-        nationality: bookDetails.nationality,
-        year_of_publication: bookDetails.year_of_publication,
-      };
-  
-      // add the book to the user's "read" collection
-      const result = await mongodb
-        .getDb()
-        .db()
-        .collection("read")
-        .insertOne(bookToAdd);
-  
-      if (result.acknowledged) {
-        return res.status(201).json({ message: "Book added successfully!" });
-      } else {
-        return res.status(500).json({ error: "Failed to add the book" });
-      }
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
+  const bookId = req.userId; 
+  try {
+    const bookDetails = await mongodb
+      .getDb()
+      .db()
+      .collection("books")
+      .findOne({ _id: bookId });
+
+    if (!bookDetails) {
+      return res.status(404).json({ message: "Book not found" });
     }
+
+    // creates an object with the desired book details
+    const bookToAdd = {
+      title: bookDetails.title,
+      author: bookDetails.author,
+      genre: bookDetails.genre,
+      nationality: bookDetails.nationality,
+      year_of_publication: bookDetails.year_of_publication,
+    };
+
+    // add the book to the user's read collection
+    const result = await mongodb
+      .getDb()
+      .db()
+      .collection("read")
+      .insertOne(bookToAdd);
+
+    if (result.acknowledged) {
+      return res.status(201).json({ message: "Book added successfully!" });
+    } else {
+      return res.status(500).json({ error: "Failed to add the book" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: "An internal server error occurred" });
+  }
 };
   
 // remove book from the collection
 const removeBook = async (req, res) => {
     try {
-      const bookId = new ObjectId(req.params.id);
+      const bookId = req.userId;
       const result = await mongodb
       .getDb()
       .db()
@@ -117,7 +118,7 @@ const removeBook = async (req, res) => {
         res.status(500).json({err: result.err});
       }
     } catch (err) {
-      res.status(500).json({message: err.message})
+      res.status(500).json({message: "An internal server error occurred." })
     }
 };
 
