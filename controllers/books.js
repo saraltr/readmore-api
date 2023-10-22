@@ -13,14 +13,14 @@ const getList = async(req, res) => {
         res.setHeader("Content-Type", "application/json");
         res.status(200).json(result);
     } catch (err) {
-        res.status(500).json({message: err.message})
+      res.status(500).json(err)
     }
 }
 
 // get a book by its id
 const getBook = async (req, res) => {
-    const bookId = req.userId; 
     try {
+      const bookId = req.userId; 
       const result = await mongodb
         .getDb()
         .db()
@@ -34,15 +34,14 @@ const getBook = async (req, res) => {
         res.status(404).json({ message: "Book not found" });
       }
     } catch (err) {
-      res.status(500).json({ message: err.message });
+        res.status(500).json(err)
     }
 };
 
 // get a book by its title
 const getBookByTitle = async (req, res) => {
-    const bookTitle = req.params.title;
-  
     try {
+      const bookTitle = req.params.title;
       const result = await mongodb
         .getDb()
         .db()
@@ -56,13 +55,12 @@ const getBookByTitle = async (req, res) => {
         res.status(404).json({ message: "Book not found" });
       }
     } catch (err) {
-      res.status(500).json({ message: err.message });
+      res.status(500).json(err)
     }
 };
 
 // create a book entry  in the database
 const addBook = async (req, res) => {
-
     try {
       // extract book information from the request body
       const book = {
@@ -84,8 +82,8 @@ const addBook = async (req, res) => {
       } else {
         res.status(500).json({error: result.error});
       }
-    } catch (error) {
-      res.status(500).json({message: error.message})
+    } catch (err) {
+        res.status(500).json(err)
     }
 };
 
@@ -112,8 +110,8 @@ const updateBook = async (req, res) => {
       } else {
         res.status(404).json({ error: result.error });
       }
-    } catch (error) {
-      res.status(500).json({message: error.message})
+    } catch (err) {
+      res.status(500).json(err)
     }
 };
 
@@ -133,7 +131,7 @@ const removeBook = async (req, res) => {
         res.status(500).json({err: result.err});
       }
     } catch (err) {
-      res.status(500).json({message: err.message})
+      res.status(500).json(err)
     }
 };
 

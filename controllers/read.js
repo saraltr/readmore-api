@@ -14,15 +14,14 @@ const getList = async(req, res) => {
         res.setHeader("Content-Type", "application/json");
         res.status(200).json(result);
     } catch (err) {
-        res.status(500).json({message: err.message})
+        res.status(500).json(err)
     }
 }
 
 // get a book by its id
 const getBook = async (req, res) => {
-    const bookId = req.userId;
-  
     try {
+      const bookId = req.userId;
       const result = await mongodb
         .getDb()
         .db()
@@ -36,15 +35,14 @@ const getBook = async (req, res) => {
         res.status(404).json({ message: "Book not found" });
       }
     } catch (err) {
-      res.status(500).json({ message: err.message });
+        res.status(500).json(err)
     }
 };
 
 // get a book by its title
 const getBookByTitle = async (req, res) => {
-  const bookTitle = req.params.title;
-
   try {
+    const bookTitle = req.params.title;
     const result = await mongodb
       .getDb()
       .db()
@@ -58,14 +56,14 @@ const getBookByTitle = async (req, res) => {
       res.status(404).json({ message: "Book not found" });
     }
   } catch (err) {
-    res.status(500).json({ message: err.message });
+      res.status(500).json(err)
   }
 };
 
 // adds a book to the read list from the books (to read list) collection
 const addReadBook = async (req, res) => {
-  const bookId = req.userId; 
   try {
+    const bookId = req.userId; 
     const bookDetails = await mongodb
       .getDb()
       .db()
@@ -98,7 +96,7 @@ const addReadBook = async (req, res) => {
       return res.status(500).json({ error: "Failed to add the book" });
     }
   } catch (err) {
-    return res.status(500).json({ message: "An internal server error occurred" });
+      res.status(500).json(err)
   }
 };
   
@@ -118,7 +116,7 @@ const removeBook = async (req, res) => {
         res.status(500).json({err: result.err});
       }
     } catch (err) {
-      res.status(500).json({message: "An internal server error occurred." })
+        res.status(500).json(err)
     }
 };
 

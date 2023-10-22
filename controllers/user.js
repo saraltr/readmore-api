@@ -28,8 +28,8 @@ const registerUser = async (req, res) => {
       } else {
         res.status(500).json({error: result.error});
       }
-    } catch (error) {
-      res.status(500).json({message: error.message})
+    } catch (err) {
+      res.status(500).json(err)
     }
 };
 
@@ -46,7 +46,7 @@ const getUsers = async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.status(200).json(result);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json(err)
   }
 };
 
@@ -87,7 +87,7 @@ const updateUser = async (req, res) => {
       res.status(404).json({ error: result.error });
     }
   } catch (error) {
-    res.status(500).json({message: error.message})
+    res.status(500).json(err)
   }
 };
 
@@ -107,7 +107,7 @@ const deleteUser = async (req, res) => {
       res.status(500).json({err: result.err});
     }
   } catch (err) {
-    res.status(500).json({message: err.message})
+    res.status(500).json(err)
   }
 };
 
