@@ -1,8 +1,12 @@
 const routes = require("express").Router();
 const usersController = require("../controllers/user");
 
-routes.post("/", usersController.registerUser);
-routes.put("/:id", usersController.updateUser);
+// validator
+const { validate, validateId } = require("../middlewares/validator");
+const  { userSchema } = require("../schema/usersSchema");
+
+routes.post("/", validate(userSchema), usersController.registerUser);
+routes.put("/:id", validate(userSchema), usersController.updateUser);
 routes.delete("/:id", usersController.deleteUser);
 routes.get("/", usersController.getUsers);
 
