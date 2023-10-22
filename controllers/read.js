@@ -1,5 +1,4 @@
 const mongodb = require("../library/connection");
-const ObjectId = require("mongodb").ObjectId;
 
 const getList = async(req, res) => {
     try {

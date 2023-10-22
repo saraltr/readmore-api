@@ -20,8 +20,7 @@ const getList = async(req, res) => {
 
 // get a book by its id
 const getBook = async (req, res) => {
-    const bookId = new ObjectId(req.params.id);
-  
+    const bookId = req.userId; 
     try {
       const result = await mongodb
         .getDb()
@@ -94,7 +93,7 @@ const addBook = async (req, res) => {
 // update an existing book
 const updateBook = async (req, res) => {
     try {
-      const bookId = new ObjectId(req.params.id);
+      const bookId = req.userId;
       const book = {
         title: req.body.title,
         author: req.body.author,
@@ -122,7 +121,7 @@ const updateBook = async (req, res) => {
 // remove book from the db
 const removeBook = async (req, res) => {
     try {
-      const bookId = new ObjectId(req.params.id);
+      const bookId = req.userId;
       const result = await mongodb
       .getDb()
       .db()

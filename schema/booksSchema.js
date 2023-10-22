@@ -1,5 +1,5 @@
 // add book schema 
-const addBookSchema = {
+const bookSchema = {
     title: {
         in: ["body"],
         exists: {
@@ -49,5 +49,5 @@ const addBookSchema = {
 };
 
 module.exports = {
-    addBookSchema
+    bookSchema
 };
