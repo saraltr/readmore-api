@@ -1,4 +1,4 @@
-// add book schema 
+// book schema for POST and PUT requests 
 const bookSchema = {
     title: {
         in: ["body"],
