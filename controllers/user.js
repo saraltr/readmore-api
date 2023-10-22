@@ -1,6 +1,4 @@
 const mongodb = require("../library/connection");
-const ObjectId = require("mongodb").ObjectId;
-
 
 // register a new user
 const registerUser = async (req, res) => {
@@ -41,7 +39,7 @@ const getUsers = async (req, res) => {
       .getDb()
       .db()
       .collection("users")
-      .find({}, { projection: { "password": 0 } }) // Exclude password if nested
+      .find({}, { projection: { "password": 0 } }) // excludex password 
       .toArray();
 
     // set the response content type to JSON and send the result
@@ -64,9 +62,10 @@ const updateUser = async (req, res) => {
 
     const originalDate = req.body.birthday; 
     const parts = new Date(originalDate).toISOString().split("T");
+    // console.log(parts)
     const newDate = parts[0];
     
-    const userId = new ObjectId(req.params.id);
+    const userId = req.userId;
     const user = {
       username: req.body.username,
       email: req.body.email,
@@ -95,7 +94,7 @@ const updateUser = async (req, res) => {
 // delete user
 const deleteUser = async (req, res) => {
   try {
-    const userId = new ObjectId(req.params.id);
+    const userId = req.userId;
     const result = await mongodb
     .getDb()
     .db()
