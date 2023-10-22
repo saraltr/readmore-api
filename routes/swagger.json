@@ -10,10 +10,25 @@
   "schemes": [
     "https"
   ],
+  "tags": [
+  {
+    "name": "Books",
+    "description": "To Read List Endpoints"
+  },
+  {
+    "name": "Read",
+    "description": "Already Read List Endpoints"
+  },
+  {
+    "name": "Users",
+    "description": "Users Endpoints"
+  }
+  ],
   "paths": {
     "/books/": {
       "get": {
-        "description": "",
+        "tags": ["Books"],
+        "description": "Get your to read books list",
         "produces": [
           "application/json"
         ],
@@ -27,7 +42,8 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": ["Books"],
+        "description": "Add book to your to read list",
         "parameters": [
           {
             "name": "body",
@@ -69,7 +85,8 @@
     },
     "/books/title/{title}": {
       "get": {
-        "description": "",
+        "tags": ["Books"],
+        "description": "Get to read book by title",
         "produces": [
           "application/json"
         ],
@@ -96,7 +113,8 @@
     },
     "/books/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Books"],
+        "description": "Get book by ID",
         "produces": [
           "application/json"
         ],
@@ -112,6 +130,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -121,7 +142,8 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": ["Books"],
+        "description": "Update a book on your to read list",
         "parameters": [
           {
             "name": "id",
@@ -158,8 +180,14 @@
           "204": {
             "description": "No Content"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
@@ -167,7 +195,8 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Books"],
+        "description": "Delete book from your to read list",
         "parameters": [
           {
             "name": "id",
@@ -180,6 +209,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -188,7 +220,8 @@
     },
     "/read/": {
       "get": {
-        "description": "",
+        "tags": ["Read"],
+        "description": "Get list of your already read books",
         "produces": [
           "application/json"
         ],
@@ -204,7 +237,8 @@
     },
     "/read/title/{title}": {
       "get": {
-        "description": "",
+        "tags": ["Read"],
+        "description": "Get book by title",
         "produces": [
           "application/json"
         ],
@@ -231,7 +265,8 @@
     },
     "/read/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Read"],
+        "description": "Get book by ID",
         "produces": [
           "application/json"
         ],
@@ -247,6 +282,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -256,7 +294,8 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Read"],
+        "description": "Delete book from your already read list",
         "parameters": [
           {
             "name": "id",
@@ -269,6 +308,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -277,7 +319,8 @@
     },
     "/read/add/{id}": {
       "post": {
-        "description": "",
+        "tags": ["Read"],
+        "description": "Add book from your ''to read list'' to your ''read list''",
         "parameters": [
           {
             "name": "id",
@@ -290,6 +333,9 @@
           "201": {
             "description": "Created"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -301,7 +347,8 @@
     },
     "/users/": {
       "post": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Create user profile",
         "parameters": [
           {
             "name": "body",
@@ -335,13 +382,17 @@
           "201": {
             "description": "Created"
           },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
       },
       "get": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Get every account",
         "produces": [
           "application/json"
         ],
@@ -357,7 +408,8 @@
     },
     "/users/{id}": {
       "put": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Update your profile",
         "parameters": [
           {
             "name": "id",
@@ -397,8 +449,14 @@
           "204": {
             "description": "No Content"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
@@ -406,7 +464,8 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["Users"],
+        "description": "Delete profile",
         "parameters": [
           {
             "name": "id",
@@ -418,6 +477,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"
