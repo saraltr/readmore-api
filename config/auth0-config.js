@@ -1,12 +1,21 @@
 const dotenv = require("dotenv");
 dotenv.config();
-const port = process.env.PORT || 3000;
+
+// determine the base URL based on the environment
+let baseURL;
+if (process.env.NODE_ENV === "production") {
+  // use the deployed URL when in production
+  baseURL = "https://read-list-api.onrender.com"; 
+} else {
+  // use localhost when running locally
+  baseURL = "http://localhost:3000";
+}
 
 module.exports = {
-    authRequired: true, 
+    authRequired: false, 
     auth0Logout: true, 
-    baseURL: port,
+    baseURL: baseURL,
     clientID: process.env.CLIENT_ID, // Auth0 Client ID
-    issuerBaseURL: process.env.DOMAIN, // Auth0 Domain
+    issuerBaseURL: process.env.ISSUER_BASE_URL, // Auth0 Domain
     secret: process.env.SECRET, // Auth0 Client Secret
 };

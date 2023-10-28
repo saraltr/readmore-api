@@ -52,9 +52,15 @@ const getUsers = async (req, res) => {
 
 
 // login an existing user
-// const loginUser = async (req, res) => {
-//   // user authentication 
-// };
+const loginUser = (req, res) => {
+  if (req.isAuthenticated()) {
+    // The user is authenticated
+    res.status(200).json({ message: "Login successful", user: req.oidc.user });
+  } else {
+    // The user is not authenticated
+    res.status(401).json({ message: "Login failed" });
+  }
+};
 
 // update user profile
 const updateUser = async (req, res) => {
@@ -116,4 +122,5 @@ module.exports = {
   getUsers,
   updateUser,
   deleteUser,
+  loginUser
 };
