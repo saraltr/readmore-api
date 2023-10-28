@@ -52,15 +52,29 @@ const getUsers = async (req, res) => {
 
 
 // login an existing user
-const loginUser = (req, res) => {
-  if (req.isAuthenticated()) {
-    // The user is authenticated
-    res.status(200).json({ message: "Login successful", user: req.oidc.user });
-  } else {
-    // The user is not authenticated
-    res.status(401).json({ message: "Login failed" });
+const loginUser = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    // Check the user's credentials against the database
+    const user = await mongodb
+      .getDb()
+      .db()
+      .collection("users")
+      .findOne({ username, password });
+
+    if (user) {
+
+      res.status(200).json({ message: "Login successful", user });
+    } else {
+      // Authentication failed
+      res.status(401).json({ message: "Login failed" });
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
+
 
 // update user profile
 const updateUser = async (req, res) => {
