@@ -40,16 +40,16 @@ POST http://localhost:3000/read/add/653461dc893c12e292c2cd48 HTTP/1.1
 
 # add new user
 ###
-POST http://localhost:3000/users HTTP/1.1
+POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "username": "Joha",
-  "email": "joha@gmai.com",
-  "password": "adventurer123",
-  "firstName": "Johana",
-  "lastName": "Moreau",
-  "birthday": "1995-10-14"
+  "username": "exampleUsername",
+  "email": "example@email.com",
+  "password": "examplePassword",
+  "firstName": "Lea",
+  "lastName": "Martin",
+  "birthday": "1998-10-05"
 }
 
 ### update an existing book

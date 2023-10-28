@@ -1,36 +1,43 @@
 const mongodb = require("../library/connection");
+const bcrypt = require("bcrypt");
 
 // register a new user
 const registerUser = async (req, res) => {
-    try {
-      // convert to ISO format
-      const originalDate = req.body.birthday; 
-      const parts = new Date(originalDate).toISOString().split("T");
-      const newDate = parts[0];
+  try {
+    // convert to ISO format
+    const originalDate = req.body.birthday; 
+    const parts = new Date(originalDate).toISOString().split("T");
+    const newDate = parts[0];
 
-      const user = {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        birthday: newDate,
-      }
-  
-      const result = await mongodb
-      .getDb()
-      .db()
-      .collection("users")
-      .insertOne(user);
-  
-      if (result.acknowledged) {
-        res.status(201).json({ message: "Thanks for registering! Your account was created.", result });
-      } else {
-        res.status(500).json({error: result.error});
-      }
-    } catch (err) {
-      res.status(500).json(err)
+    // Extract user data from the request
+    const { username, email, password, firstName, lastName, birthday } = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // create the user object with the hashed password and correct date format
+    const user = {
+      username,
+      email,
+      password: hashedPassword,
+      firstName,
+      lastName,
+      birthday: newDate 
+    };
+
+    const result = await mongodb
+    .getDb()
+    .db()
+    .collection("users")
+    .insertOne(user);
+
+    if (result.acknowledged) {
+      res.status(201).json({ message: "Thanks for registering! Your account was created.", result });
+    } else {
+      res.status(500).json({error: result.error});
     }
+  } catch (err) {
+    res.status(500).json(err)
+  }
 };
 
 const getUsers = async (req, res) => {
@@ -56,7 +63,7 @@ const loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Check the user's credentials against the database
+    // check the user's credentials against the database
     const user = await mongodb
       .getDb()
       .db()
