@@ -91,12 +91,16 @@ const updateUser = async (req, res) => {
     const parts = new Date(originalDate).toISOString().split("T");
     // console.log(parts)
     const newDate = parts[0];
+
+    const password = req.body.password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     
     const userId = req.userId;
     const user = {
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       birthday: newDate,
