@@ -28,9 +28,13 @@
     "Auth0": {
       "type": "oauth2",
       "authorizationUrl": "https://dev-7yh77mqpqlktpxg3.us.auth0.com/authorize",
+      "tokenUrl": "https://dev-7yh77mqpqlktpxg3.us.auth0.com/oauth/token",
       "flow": "implicit",
       "scopes": {
-        "read:users": "Read access to the API"
+        "read:users": "Read users",
+        "read:client_grants":	"Read Client Grants",
+        "read:users_app_metadata":	"Read Users App Metadata",
+        "read:clients":	"Read Clients"
       }
     }
   },  
