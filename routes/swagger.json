@@ -28,7 +28,6 @@
     "Auth0": {
       "type": "oauth2",
       "authorizationUrl": "https://dev-7yh77mqpqlktpxg3.us.auth0.com/authorize",
-      "tokenUrl": "https://dev-7yh77mqpqlktpxg3.us.auth0.com/oauth/token",
       "flow": "implicit",
       "scopes": {
         "read:users": "Read users",
@@ -359,7 +358,8 @@
         }
       }
     },
-    "/users/": {
+    "/users/": 
+    {
       "post": {
         "tags": ["Users"],
         "description": "Create user profile",
@@ -408,25 +408,25 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "get": {
-        "tags": ["Users"],
-        "description": "Get every account",
-        "security": [
-          {
-            "Auth0": []
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+      }
+    },
+    "/users/all/": {
+      "tags": ["Users"],
+      "description": "Get every account",
+      "security": [
+        {
+          "Auth0": []
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "OK"
+        },
+        "500": {
+          "description": "Internal Server Error"
         }
       }
     },

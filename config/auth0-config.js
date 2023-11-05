@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 module.exports = {
-  authRequired: true, 
+  authRequired: false, 
   auth0Logout: true, 
   baseURL: baseURL,
   clientID: process.env.CLIENT_ID, // Auth0 Client ID

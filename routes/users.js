@@ -15,6 +15,6 @@ routes.get('/profile', usersController.userInfo);
 routes.post("/", validate(userSchema), usersController.registerUser);
 routes.put("/:id", validateId, validate(userSchema), usersController.updateUser);
 routes.delete("/:id", validateId, usersController.deleteUser);
-routes.get("/:all", usersController.getUsers);
+routes.get("/all", usersController.getUsers);
 
 module.exports = routes;
