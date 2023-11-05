@@ -439,6 +439,11 @@
           "Users"
         ],
         "description": "Get every account",
+        "security": [
+          {
+            "Auth0": []
+          }
+        ],
         "produces": [
           "application/json"
         ],
