@@ -24,6 +24,16 @@
     "description": "Users Endpoints"
   }
   ],
+  "securityDefinitions": {
+    "Auth0": {
+      "type": "oauth2",
+      "authorizationUrl": "https://dev-7yh77mqpqlktpxg3.us.auth0.com/authorize",
+      "flow": "implicit",
+      "scopes": {
+        "read:users": "Read access to the API"
+      }
+    }
+  },  
   "paths": {
     "/books/": {
       "get": {
@@ -349,6 +359,11 @@
       "post": {
         "tags": ["Users"],
         "description": "Create user profile",
+        "security": [
+          {
+            "Auth0": []
+          }
+        ],
         "parameters": [
           {
             "name": "body",
@@ -393,6 +408,11 @@
       "get": {
         "tags": ["Users"],
         "description": "Get every account",
+        "security": [
+          {
+            "Auth0": []
+          }
+        ],
         "produces": [
           "application/json"
         ],
