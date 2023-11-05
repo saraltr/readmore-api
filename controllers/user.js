@@ -1,5 +1,6 @@
 const mongodb = require("../library/connection");
 const bcrypt = require("bcrypt");
+const { requiresAuth } = require("express-openid-connect");
 
 // register a new user
 const registerUser = async (req, res) => {
@@ -20,8 +21,7 @@ const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
       firstName,
-      lastName,
-      birthday: newDate 
+      lastName
     };
 
     const result = await mongodb
@@ -57,31 +57,21 @@ const getUsers = async (req, res) => {
   }
 };
 
+const userInfo = (req, res) => {
+  requiresAuth()
+  const user = req.oidc.user;
+  // res.send(user);
 
-// login an existing user
-const loginUser = async (req, res) => {
-  try {
-    const { username, password } = req.body;
+    // create a custom JSON object with only the desired properties
+    const userProfile = {
+        nickname: user.nickname,
+        email: user.email,
+        picture: user.picture,
+        last_updated: user.updated_at
+    };
 
-    // check the user's credentials against the database
-    const user = await mongodb
-      .getDb()
-      .db()
-      .collection("users")
-      .findOne({ username, password });
-
-    if (user) {
-
-      res.status(200).json({ message: "Login successful", user });
-    } else {
-      // Authentication failed
-      res.status(401).json({ message: "Login failed" });
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
+    res.json(userProfile);
 };
-
 
 // update user profile
 const updateUser = async (req, res) => {
@@ -102,8 +92,7 @@ const updateUser = async (req, res) => {
       email: req.body.email,
       password: hashedPassword,
       firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      birthday: newDate,
+      lastName: req.body.lastName
     }
 
     const result = await mongodb
@@ -147,5 +136,5 @@ module.exports = {
   getUsers,
   updateUser,
   deleteUser,
-  loginUser
+  userInfo
 };
