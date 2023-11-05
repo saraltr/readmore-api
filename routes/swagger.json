@@ -11,18 +11,18 @@
     "https"
   ],
   "tags": [
-  {
-    "name": "Books",
-    "description": "To Read List Endpoints"
-  },
-  {
-    "name": "Read",
-    "description": "Already Read List Endpoints"
-  },
-  {
-    "name": "Users",
-    "description": "Users Endpoints"
-  }
+    {
+      "name": "Books",
+      "description": "To Read List Endpoints"
+    },
+    {
+      "name": "Read",
+      "description": "Already Read List Endpoints"
+    },
+    {
+      "name": "Users",
+      "description": "Users Endpoints"
+    }
   ],
   "securityDefinitions": {
     "Auth0": {
@@ -31,16 +31,18 @@
       "flow": "implicit",
       "scopes": {
         "read:users": "Read users",
-        "read:client_grants":	"Read Client Grants",
-        "read:users_app_metadata":	"Read Users App Metadata",
-        "read:clients":	"Read Clients"
+        "read:client_grants": "Read Client Grants",
+        "read:users_app_metadata": "Read Users App Metadata",
+        "read:clients": "Read Clients"
       }
     }
-  },  
+  },
   "paths": {
     "/books/": {
       "get": {
-        "tags": ["Books"],
+        "tags": [
+          "Books"
+        ],
         "description": "Get your to read books list",
         "produces": [
           "application/json"
@@ -55,7 +57,9 @@
         }
       },
       "post": {
-        "tags": ["Books"],
+        "tags": [
+          "Books"
+        ],
         "description": "Add book to your to read list",
         "parameters": [
           {
@@ -98,7 +102,9 @@
     },
     "/books/title/{title}": {
       "get": {
-        "tags": ["Books"],
+        "tags": [
+          "Books"
+        ],
         "description": "Get to read book by title",
         "produces": [
           "application/json"
@@ -126,7 +132,9 @@
     },
     "/books/{id}": {
       "get": {
-        "tags": ["Books"],
+        "tags": [
+          "Books"
+        ],
         "description": "Get book by ID",
         "produces": [
           "application/json"
@@ -155,7 +163,9 @@
         }
       },
       "put": {
-        "tags": ["Books"],
+        "tags": [
+          "Books"
+        ],
         "description": "Update a book on your to read list",
         "parameters": [
           {
@@ -208,7 +218,9 @@
         }
       },
       "delete": {
-        "tags": ["Books"],
+        "tags": [
+          "Books"
+        ],
         "description": "Delete book from your to read list",
         "parameters": [
           {
@@ -233,7 +245,9 @@
     },
     "/read/": {
       "get": {
-        "tags": ["Read"],
+        "tags": [
+          "Read"
+        ],
         "description": "Get list of your already read books",
         "produces": [
           "application/json"
@@ -250,7 +264,9 @@
     },
     "/read/title/{title}": {
       "get": {
-        "tags": ["Read"],
+        "tags": [
+          "Read"
+        ],
         "description": "Get book by title",
         "produces": [
           "application/json"
@@ -278,7 +294,9 @@
     },
     "/read/{id}": {
       "get": {
-        "tags": ["Read"],
+        "tags": [
+          "Read"
+        ],
         "description": "Get book by ID",
         "produces": [
           "application/json"
@@ -307,7 +325,9 @@
         }
       },
       "delete": {
-        "tags": ["Read"],
+        "tags": [
+          "Read"
+        ],
         "description": "Delete book from your already read list",
         "parameters": [
           {
@@ -332,7 +352,9 @@
     },
     "/read/add/{id}": {
       "post": {
-        "tags": ["Read"],
+        "tags": [
+          "Read"
+        ],
         "description": "Add book from your ''to read list'' to your ''read list''",
         "parameters": [
           {
@@ -358,10 +380,11 @@
         }
       }
     },
-    "/users/": 
-    {
+    "/users/": {
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "description": "Create user profile",
         "security": [
           {
@@ -411,28 +434,29 @@
       }
     },
     "/users/all/": {
-      "tags": ["Users"],
-      "description": "Get every account",
-      "security": [
-        {
-          "Auth0": []
-        }
-      ],
-      "produces": [
-        "application/json"
-      ],
-      "responses": {
-        "200": {
-          "description": "OK"
-        },
-        "500": {
-          "description": "Internal Server Error"
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Get every account",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       }
     },
     "/users/{id}": {
       "put": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "description": "Update your profile",
         "parameters": [
           {
@@ -488,7 +512,9 @@
         }
       },
       "delete": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "description": "Delete profile",
         "parameters": [
           {
