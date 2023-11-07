@@ -3,42 +3,6 @@ const bcrypt = require("bcrypt");
 const { requiresAuth } = require("express-openid-connect");
 
 // register a new user
-const registerUser = async (req, res) => {
-  try {
-    // convert to ISO format
-    const originalDate = req.body.birthday; 
-    const parts = new Date(originalDate).toISOString().split("T");
-    const newDate = parts[0];
-
-    // Extract user data from the request
-    const { username, email, password, firstName, lastName, birthday } = req.body;
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // create the user object with the hashed password and correct date format
-    const user = {
-      username,
-      email,
-      password: hashedPassword,
-      firstName,
-      lastName
-    };
-
-    const result = await mongodb
-    .getDb()
-    .db()
-    .collection("users")
-    .insertOne(user);
-
-    if (result.acknowledged) {
-      res.status(201).json({ message: "Thanks for registering! Your account was created.", result });
-    } else {
-      res.status(500).json({error: result.error});
-    }
-  } catch (err) {
-    res.status(500).json(err)
-  }
-};
 
 const getUsers = async (req, res) => {
   try {
@@ -46,7 +10,7 @@ const getUsers = async (req, res) => {
       .getDb()
       .db()
       .collection("users")
-      .find({}, { projection: { "password": 0 } }) // excludex password 
+      .find({}, { projection: { "user_id": 0, "_id": 0 } }) 
       .toArray();
 
     // set the response content type to JSON and send the result
@@ -57,40 +21,51 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getUsername = async (req, res) => {
+  try {
+    const username = req.params.username;
+    const result = await mongodb
+      .getDb()
+      .db()
+      .collection("users")
+      .findOne({ username: username },
+        {projection: {user_id: 0, _id: 0,}})
+
+      if (result) {
+        res.setHeader("Content-Type", "application/json");
+        res.status(200).json(result);
+      } else {
+        res.status(404).json({ message: "user not found" });
+      }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
 const userInfo = (req, res) => {
   requiresAuth()
   const user = req.oidc.user;
   // res.send(user);
 
-    // create a custom JSON object with only the desired properties
+    // create a custom JSON object
     const userProfile = {
         nickname: user.nickname,
         email: user.email,
         picture: user.picture,
-        last_updated: user.updated_at
+        last_updated: user.updated_at,
     };
-
-    res.json(userProfile);
+    res.json(user);
 };
 
 // update user profile
 const updateUser = async (req, res) => {
   try {
-
-    const originalDate = req.body.birthday; 
-    const parts = new Date(originalDate).toISOString().split("T");
-    // console.log(parts)
-    const newDate = parts[0];
-
-    const password = req.body.password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     
     const userId = req.userId;
     const user = {
       username: req.body.username,
       email: req.body.email,
-      password: hashedPassword,
       firstName: req.body.firstName,
       lastName: req.body.lastName
     }
@@ -132,9 +107,9 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-  registerUser,
   getUsers,
   updateUser,
   deleteUser,
-  userInfo
+  userInfo,
+  getUsername
 };

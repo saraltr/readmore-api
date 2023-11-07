@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Read More Api",
-    "description": "To read list api",
+    "title": "Bookclub Api",
+    "description": "Bookclub app",
     "version": "1.0.0"
   },
   "host": "read-list-api.onrender.com",
@@ -10,40 +10,33 @@
   "schemes": [
     "https"
   ],
-  "tags": [
-    {
-      "name": "Books",
-      "description": "To Read List Endpoints"
-    },
-    {
-      "name": "Read",
-      "description": "Already Read List Endpoints"
-    },
-    {
-      "name": "Users",
-      "description": "Users Endpoints"
-    }
-  ],
-  "securityDefinitions": {
-    "Auth0": {
-      "type": "oauth2",
-      "authorizationUrl": "https://dev-7yh77mqpqlktpxg3.us.auth0.com/authorize",
-      "flow": "implicit",
-      "scopes": {
-        "read:users": "Read users",
-        "read:client_grants": "Read Client Grants",
-        "read:users_app_metadata": "Read Users App Metadata",
-        "read:clients": "Read Clients"
-      }
-    }
-  },
   "paths": {
+    "/logout": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/books/": {
       "get": {
-        "tags": [
-          "Books"
-        ],
-        "description": "Get your to read books list",
+        "description": "",
         "produces": [
           "application/json"
         ],
@@ -57,10 +50,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Books"
-        ],
-        "description": "Add book to your to read list",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -102,10 +92,7 @@
     },
     "/books/title/{title}": {
       "get": {
-        "tags": [
-          "Books"
-        ],
-        "description": "Get to read book by title",
+        "description": "",
         "produces": [
           "application/json"
         ],
@@ -132,10 +119,7 @@
     },
     "/books/{id}": {
       "get": {
-        "tags": [
-          "Books"
-        ],
-        "description": "Get book by ID",
+        "description": "",
         "produces": [
           "application/json"
         ],
@@ -163,10 +147,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Books"
-        ],
-        "description": "Update a book on your to read list",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -218,10 +199,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Books"
-        ],
-        "description": "Delete book from your to read list",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -245,10 +223,7 @@
     },
     "/read/": {
       "get": {
-        "tags": [
-          "Read"
-        ],
-        "description": "Get list of your already read books",
+        "description": "",
         "produces": [
           "application/json"
         ],
@@ -264,10 +239,7 @@
     },
     "/read/title/{title}": {
       "get": {
-        "tags": [
-          "Read"
-        ],
-        "description": "Get book by title",
+        "description": "",
         "produces": [
           "application/json"
         ],
@@ -294,10 +266,7 @@
     },
     "/read/{id}": {
       "get": {
-        "tags": [
-          "Read"
-        ],
-        "description": "Get book by ID",
+        "description": "",
         "produces": [
           "application/json"
         ],
@@ -325,10 +294,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Read"
-        ],
-        "description": "Delete book from your already read list",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -352,10 +318,7 @@
     },
     "/read/add/{id}": {
       "post": {
-        "tags": [
-          "Read"
-        ],
-        "description": "Add book from your ''to read list'' to your ''read list''",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -380,89 +343,19 @@
         }
       }
     },
-    "/users/": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Create user profile",
-        "security": [
-          {
-            "Auth0": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "birthday": {
-                  "example": "any"
-                },
-                "username": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/users/all/": {
+    "/users/profile": {
       "get": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Get every account",
-        "security": [
-          {
-            "Auth0": []
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
     },
     "/users/{id}": {
       "put": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Update your profile",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -476,16 +369,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "birthday": {
-                  "example": "any"
-                },
                 "username": {
                   "example": "any"
                 },
                 "email": {
-                  "example": "any"
-                },
-                "password": {
                   "example": "any"
                 },
                 "firstName": {
@@ -517,10 +404,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Delete profile",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -535,6 +419,92 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/username/{username}": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/challenges/": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/challenges/{name}": {
+      "get": {
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"

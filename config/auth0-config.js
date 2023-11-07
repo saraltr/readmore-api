@@ -1,21 +1,27 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-// Determine the base URL based on the environment
+// determine the base URL based on the environment
 let baseURL;
 if (process.env.NODE_ENV === "production") {
   // Use the deployed URL when in production
-  baseURL = "https://read-list-api.onrender.com/users"; 
+  baseURL = "https://read-list-api.onrender.com/"; 
 } else {
   // Use localhost when running locally
-  baseURL = "http://localhost:3000/users";
+  baseURL = "http://localhost:3000/";
 }
 
 module.exports = {
-  authRequired: true, 
-  auth0Logout: true, 
+  authRequired: false, 
+  auth0Logout: true,
+  session: {
+    //@ts-ignore
+    cookie: {
+      domain: baseURL
+    }
+  }, 
   baseURL: baseURL,
   clientID: process.env.CLIENT_ID, // Auth0 Client ID
   issuerBaseURL: process.env.ISSUER_BASE_URL, // Auth0 Domain
-  secret: process.env.SECRET, // Auth0 Client Secret
+  clientSecret: process.env.SECRET, // Auth0 Client Secret
 };
