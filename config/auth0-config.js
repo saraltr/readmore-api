@@ -8,18 +8,12 @@ if (process.env.NODE_ENV === "production") {
   baseURL = "https://read-list-api.onrender.com/"; 
 } else {
   // Use localhost when running locally
-  baseURL = "http://localhost:3000/";
+  baseURL = "http://localhost:300/";
 }
 
 module.exports = {
   authRequired: false, 
-  auth0Logout: true,
-  session: {
-    //@ts-ignore
-    cookie: {
-      domain: baseURL
-    }
-  }, 
+  auth0Logout: true, 
   baseURL: baseURL,
   clientID: process.env.CLIENT_ID, // Auth0 Client ID
   issuerBaseURL: process.env.ISSUER_BASE_URL, // Auth0 Domain

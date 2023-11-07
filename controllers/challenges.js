@@ -23,7 +23,8 @@ const getChallenge = async (req, res) => {
         .getDb()
         .db()
         .collection("challenges")
-        .findOne({ title: name });
+        .findOne({ title: name })
+        .toArray();
   
       if (result) {
         res.setHeader("Content-Type", "application/json");
@@ -38,18 +39,13 @@ const getChallenge = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const challengeName = req.params.title;
-    console.log('Received challengeId:', challengeName); 
+    const challengeId = req.id;
+
     const result = await mongodb
       .getDb()
       .db()
       .collection("challenges")
-      .findOne({ name: challengeName })
-        .catch((error) => {
-        console.error('MongoDB Query Error:', error);
-    })
-
-    console.log('Result from MongoDB:', result); // Add this line for logging
+      .findOne({ _id: challengeId });
 
     if (result) {
       res.setHeader("Content-Type", "application/json");
@@ -58,14 +54,14 @@ const getById = async (req, res) => {
       res.status(404).json({ message: "Challenge not found" });
     }
   } catch (err) {
-    console.error('Error:', err); // Add this line for logging
+    console.error('Error:', err);
     res.status(500).json(err);
   }
 };
 
 const addToReadlist = async (req, res) => {
-
-  const id = req.params.id;
+  
+  const id = req.id;
   const challenge = await mongodb
     .getDb()
     .db()
