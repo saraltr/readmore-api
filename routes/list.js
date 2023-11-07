@@ -6,7 +6,7 @@ const { bookSchema } = require("../schema/booksSchema");
 const { validate, validateId } = require("../middlewares/validator");
 
 routes.get("/", listController.getList);
-routes.get("/title/:title", listController.getBookByTitle);
-routes.get("/:id", validateId, listController.getBook);
+routes.get("/title/:title", listController.getChallenge);
+routes.get("/:id", validateId, listController.getById);
 
 module.exports = routes;
