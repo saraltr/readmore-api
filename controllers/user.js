@@ -60,20 +60,23 @@ const userInfo = (req, res) => {
 // update user profile
 const updateUser = async (req, res) => {
   try {
-    
+    const user = req.oidc.user;
     const userId = req.userId;
-    const user = {
-      username: req.body.username,
-      email: req.body.email,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName
-    }
+    const updateFields = {
+      $set: {
+        username: req.body.username,
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        user_id: user 
+      }
+    };
 
     const result = await mongodb
-    .getDb()
-    .db()
-    .collection("users")
-    .replaceOne({ _id: userId }, user);
+      .getDb()
+      .db()
+      .collection("users")
+      .updateOne({ _id: userId }, updateFields);
 
     if (result.modifiedCount > 0) {
       res.status(204).send();
@@ -81,7 +84,7 @@ const updateUser = async (req, res) => {
       res.status(404).json({ error: result.error });
     }
   } catch (error) {
-    res.status(500).json(err)
+    res.status(500).json(error);
   }
 };
 
@@ -106,21 +109,21 @@ const deleteUser = async (req, res) => {
 };
 
 const addToReadlist = async (req, res) => {
-
-  try{
+  try {
     const bookId = req.userId;
-    console.log('Book ID:', bookId); 
-      const book = await mongodb
-        .getDb()
-        .db()
-        .collection("books")
-        .findOne({ _id: bookId });
+    console.log('Book ID:', bookId);
+
+    const book = await mongodb
+      .getDb()
+      .db()
+      .collection("books")
+      .findOne({ _id: bookId });
 
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
     }
 
-    // indentifies the user by their auth0 indentifier
+    // identify the user by their auth0 identifier
     const userSub = req.oidc.user.sub;
     console.log('User ID:', userSub);
     const user = await mongodb
@@ -129,39 +132,39 @@ const addToReadlist = async (req, res) => {
       .collection("users")
       .findOne({ user_id: userSub });
 
-      if (user) {
-        // check if the user has a current challenges list; if not, create an empty one
-        user.Readlist = user.Readlist || [];
-      
-        // check if the challenge is already in the user's current challenges list
-        const challengeIndex = user.Readlist.findIndex((item) => item.title === challenge.title);
-      
-        if (challengeIndex === -1) {
+    if (user) {
+      // check if the user has a Readlist if not create an empty one
+      user.Readlist = user.Readlist || [];
 
-          user.Readlist.push(book);
-      
-          // update the user with the new current challenges list
-          const result = await mongodb
-            .getDb()
-            .db()
-            .collection("users")
-            .updateOne({ user_id: userSub }, { $set: { Readlist: user.Readlist } });
-      
-          if (result.modifiedCount > 0) {
-            res.status(200).json({ message: "Book added to Read List successfully" });
-          } else {
-            res.status(500).json({ error: "Failed to update the Current Read list" });
-          }
+      // check if the book is already in the user's list
+      const bookIndex = user.Readlist.findIndex((item) => item._id === book._id);
+
+      if (bookIndex === -1) {
+        user.Readlist.push(book);
+
+        // update the user with the new Readlist
+        const result = await mongodb
+          .getDb()
+          .db()
+          .collection("users")
+          .updateOne({ user_id: userSub }, { $set: { Readlist: user.Readlist } });
+
+        if (result.modifiedCount > 0) {
+          res.status(200).json({ message: "Book added to Read List successfully" });
         } else {
-          res.status(409).json({ message: "Book is already in the Current Read list" });
+          res.status(500).json({ error: "Failed to update the Readlist" });
         }
       } else {
-        res.status(404).json({ message: "User not found" });
+        res.status(409).json({ message: "Book is already in the Readlist" });
       }
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
   } catch (err) {
-    res.status(500).json(err)}
+    console.error(err);
+    res.status(500).json(err);
+  }
 };
-
 
 module.exports = {
   getUsers,
