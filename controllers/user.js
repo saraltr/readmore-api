@@ -2,7 +2,6 @@ const mongodb = require("../library/connection");
 const bcrypt = require("bcrypt");
 const { requiresAuth } = require("express-openid-connect");
 
-// register a new user
 
 const getUsers = async (req, res) => {
   try {
@@ -55,7 +54,7 @@ const userInfo = (req, res) => {
         picture: user.picture,
         last_updated: user.updated_at,
     };
-    res.json(user);
+    res.json(userProfile);
 };
 
 // update user profile
@@ -106,10 +105,69 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const addToReadlist = async (req, res) => {
+
+  try{
+    const bookId = req.userId;
+    console.log('Book ID:', bookId); 
+      const book = await mongodb
+        .getDb()
+        .db()
+        .collection("books")
+        .findOne({ _id: bookId });
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    // indentifies the user by their auth0 indentifier
+    const userSub = req.oidc.user.sub;
+    console.log('User ID:', userSub);
+    const user = await mongodb
+      .getDb()
+      .db()
+      .collection("users")
+      .findOne({ user_id: userSub });
+
+      if (user) {
+        // check if the user has a current challenges list; if not, create an empty one
+        user.Readlist = user.Readlist || [];
+      
+        // check if the challenge is already in the user's current challenges list
+        const challengeIndex = user.Readlist.findIndex((item) => item.title === challenge.title);
+      
+        if (challengeIndex === -1) {
+
+          user.Readlist.push(book);
+      
+          // update the user with the new current challenges list
+          const result = await mongodb
+            .getDb()
+            .db()
+            .collection("users")
+            .updateOne({ user_id: userSub }, { $set: { Readlist: user.Readlist } });
+      
+          if (result.modifiedCount > 0) {
+            res.status(200).json({ message: "Book added to Read List successfully" });
+          } else {
+            res.status(500).json({ error: "Failed to update the Current Read list" });
+          }
+        } else {
+          res.status(409).json({ message: "Book is already in the Current Read list" });
+        }
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
+  } catch (err) {
+    res.status(500).json(err)}
+};
+
+
 module.exports = {
   getUsers,
   updateUser,
   deleteUser,
   userInfo,
-  getUsername
+  getUsername,
+  addToReadlist
 };

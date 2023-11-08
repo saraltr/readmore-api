@@ -3,8 +3,7 @@ const router = express.Router();
 const booksRouter = require("./books");
 const readRouter = require("./read");
 const usersRouter = require("./users");
-const challengeRouter = require("./challenges");
-const listRouter = require("./list");
+
 const { auth, requiresAuth } = require("express-openid-connect");
 const auth0Config = require("../config/auth0-config");
 
@@ -38,8 +37,6 @@ router.get("/", (req, res) => {
 router.use("/books", booksRouter);
 router.use("/read", readRouter);
 router.use("/users", usersRouter);
-router.use("/challenges", challengeRouter);
-router.use("/list", listRouter);
 
 // Swagger UI middleware
 router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));

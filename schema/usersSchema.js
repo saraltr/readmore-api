@@ -24,17 +24,6 @@ const userSchema = {
         errorMessage: "Invalid email address",
       },
     },
-    password: {
-      in: ["body"],
-      exists: {
-        errorMessage: "password is required",
-        options: { checkFalsy: true },
-      },
-      isLength: {
-        options: { min: 5 },
-        errorMessage: "Password should be at least 5 characters long",
-      },
-    },
     firstName: {
       in: ["body"],
       exists: {
@@ -54,23 +43,6 @@ const userSchema = {
       isString: {
         errorMessage: "Last name should be a string",
       },
-    },
-    birthday: {
-        in: ["body"],
-        exists: {
-          errorMessage: "Birthday required",
-          options: { checkFalsy: true },
-        },
-        isString: true,
-        custom: {
-          options: (value) => {
-            const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
-            if (!dateFormatRegex.test(value)) {
-              throw new Error("Birthday should be in the format YYYY-MM-DD");
-            }
-            return true; // validation passed
-          },
-        },
     }
 };
   

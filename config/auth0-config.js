@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "production") {
   baseURL = "https://read-list-api.onrender.com/"; 
 } else {
   // Use localhost when running locally
-  baseURL = "http://localhost:300/";
+  baseURL = "http://localhost:3000/";
 }
 
 module.exports = {

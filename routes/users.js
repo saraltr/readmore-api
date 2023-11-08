@@ -7,6 +7,7 @@ const  { userSchema } = require("../schema/usersSchema");
 
 routes.get('/profile', usersController.userInfo);
 
+routes.post("/add/:id", validateId, usersController.addToReadlist);
 routes.put("/:id", validateId, validate(userSchema), usersController.updateUser);
 routes.delete("/:id", validateId, usersController.deleteUser);
 routes.get("/", usersController.getUsers);

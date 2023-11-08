@@ -1,5 +1,16 @@
 // LOCALHOST
 
+###
+POST http://localhost:3000/users/add/6529c1faaf2f980d3e463400 HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:3000/books HTTP/1.1
+
+###
+GET http://localhost:3000/challenges/654990c66ff01e340f8f62dc HTTP/1.1
+
+
 # get complete list for both collections
 ###
 GET http://localhost:3000/books HTTP/1.1
@@ -13,7 +24,7 @@ GET http://localhost:3000/users HTTP/1.1
 GET http://localhost:3000/books/6529c1faaf2f980d3e46340d HTTP/1.1
 
 ###
-GET http://localhost:3000/read/6529bfdfaf2f980d3e4633e HTTP/1.1
+GET http://localhost:3000/read/6529bfdfaf2f980d3e4633ee HTTP/1.1
 
 
 # Get by title
@@ -66,16 +77,16 @@ Content-Type: application/json
 
 # update user
 ###
-PUT http://localhost:3000/users/65347278dd0be8f887b9f0ed HTTP/1.1
+PUT http://localhost:3000/users/653198154a5eda31b5af5ae8 HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "Joha2",
-  "email": "johalat@gmail.com",
-  "password": "tombraider",
-  "firstName": "Johana",
-  "lastName": "Moreau",
-  "birthday": "1998-10-05"
+  "username": "saraltr",
+  "email": "saralatorre97@gmail.com",
+  "password": "password1!",
+  "firstName": "Sara",
+  "lastName": "Latorre",
+  "birthday": "1997-10-02"
 }
 
 # remove book from the books collection
