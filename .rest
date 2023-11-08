@@ -1,16 +1,5 @@
 // LOCALHOST
 
-###
-POST http://localhost:3000/users/add/6529c1faaf2f980d3e463400 HTTP/1.1
-Content-Type: application/json
-
-###
-GET http://localhost:3000/books HTTP/1.1
-
-###
-GET http://localhost:3000/challenges/654990c66ff01e340f8f62dc HTTP/1.1
-
-
 # get complete list for both collections
 ###
 GET http://localhost:3000/books HTTP/1.1
