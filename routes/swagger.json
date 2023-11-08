@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Bookclub Api",
-    "description": "Bookclub app",
+    "description": "Welcome to The Book Club APi! This APi will help you manage your book club's activities. With three main types of endpoints, it allows club members to easily track their reading progress and connect with their club members.",
     "version": "1.0.0"
   },
   "host": "read-list-api.onrender.com",
@@ -10,20 +10,35 @@
   "schemes": [
     "https"
   ],
-  "paths": {
-    "/logout": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
+  "tags": [
+    {
+      "name": "Books",
+      "description": "Book Club To Read List Endpoints. Club members can add, view, and update the list of books they plan to read."
     },
+    {
+      "name": "Read",
+      "description": "Already Read List Endpoints. Members can log and review books they've finished."
+    },
+    {
+      "name": "Users",
+      "description": "Club Members Endpoints. Users can view profiles, and explore each other's reading lists."
+    }
+  ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter the token"
+    }
+  },
+  "paths": {
     "/": {
       "get": {
-        "description": "",
+        "tags": [
+          "App Menu"
+        ],
+        "description": "Landing Page",
         "responses": {
           "200": {
             "description": "OK"
@@ -36,7 +51,10 @@
     },
     "/books/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "description": "Get your to read books list",
         "produces": [
           "application/json"
         ],
@@ -50,7 +68,10 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "description": "Add book to your to read list",
         "parameters": [
           {
             "name": "body",
@@ -59,20 +80,27 @@
               "type": "object",
               "properties": {
                 "title": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "author": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "genre": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "nationality": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "year_of_publication": {
-                  "example": "any"
+                  "example": "int"
                 }
+              },
+              "example": {
+                "title": "Wuthering Heights",
+                "author": "Emily Brontë",
+                "genre": "Classic",
+                "nationality": "English",
+                "year_of_publication": "1847"
               }
             }
           }
@@ -92,7 +120,10 @@
     },
     "/books/title/{title}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "description": "Get to read book by title",
         "produces": [
           "application/json"
         ],
@@ -119,7 +150,10 @@
     },
     "/books/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "description": "Get book by ID",
         "produces": [
           "application/json"
         ],
@@ -147,7 +181,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "description": "Update a book on your club to read list",
         "parameters": [
           {
             "name": "id",
@@ -162,19 +199,19 @@
               "type": "object",
               "properties": {
                 "title": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "author": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "genre": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "nationality": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "year_of_publication": {
-                  "example": "any"
+                  "example": "int"
                 }
               }
             }
@@ -199,7 +236,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "description": "Delete book from your to read list",
         "parameters": [
           {
             "name": "id",
@@ -223,7 +263,10 @@
     },
     "/read/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Read"
+        ],
+        "description": "Get list of your Club already read books",
         "produces": [
           "application/json"
         ],
@@ -239,7 +282,10 @@
     },
     "/read/title/{title}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Read"
+        ],
+        "description": "Get book by title",
         "produces": [
           "application/json"
         ],
@@ -266,7 +312,10 @@
     },
     "/read/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Read"
+        ],
+        "description": "Get book by ID",
         "produces": [
           "application/json"
         ],
@@ -294,7 +343,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Read"
+        ],
+        "description": "Delete book from your already read list",
         "parameters": [
           {
             "name": "id",
@@ -318,7 +370,10 @@
     },
     "/read/add/{id}": {
       "post": {
-        "description": "",
+        "tags": [
+          "Read"
+        ],
+        "description": "Add book from your ''to read list'' to your ''read list''",
         "parameters": [
           {
             "name": "id",
@@ -345,7 +400,15 @@
     },
     "/users/profile": {
       "get": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "description": "Access your profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -355,7 +418,10 @@
     },
     "/users/{id}": {
       "put": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "description": "Update your profile",
         "parameters": [
           {
             "name": "id",
@@ -370,16 +436,16 @@
               "type": "object",
               "properties": {
                 "username": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "valid registered email"
                 },
                 "firstName": {
-                  "example": "any"
+                  "example": "string"
                 },
                 "lastName": {
-                  "example": "any"
+                  "example": "string"
                 }
               }
             }
@@ -404,7 +470,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "description": "Delete your profile",
         "parameters": [
           {
             "name": "id",
@@ -428,7 +497,10 @@
     },
     "/users/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "description": "View Members profiles",
         "produces": [
           "application/json"
         ],
@@ -444,7 +516,10 @@
     },
     "/users/username/{username}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "description": "Search Member by their username",
         "produces": [
           "application/json"
         ],
@@ -471,7 +546,10 @@
     },
     "/users/add/{id}": {
       "post": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "description": "Add book to your read list on your profile",
         "parameters": [
           {
             "name": "id",
