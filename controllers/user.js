@@ -60,7 +60,7 @@ const userInfo = (req, res) => {
 // update user profile
 const updateUser = async (req, res) => {
   try {
-    const user = req.oidc.user;
+    const user = req.oidc.user.sub;
     const userId = req.userId;
     const updateFields = {
       $set: {
