@@ -42,14 +42,7 @@ const userSchema = {
     isString: {
       errorMessage: "Last name should be a string",
     },
-  },
-  // optional:
-  Readlist: {
-    in: ["body"],
-    isArray: {
-      errorMessage: "Readlist should be an array",
-    },
-  },
+  }
 };
   
 module.exports = {
